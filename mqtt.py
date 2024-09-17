@@ -47,6 +47,7 @@ class Publisher():
         try:
             publish.single(self.channel, message, hostname=self.server, client_id=self.client_id)
             return True
-        except:
+        except Exception as e:
+            logging.error(f"Failed to publish message: {e}")
             logging.error("Server DNS issue.")
             return False
