@@ -17,7 +17,7 @@ from astral.geocoder import database, lookup
 from astral.sun import sun
 from datetime import datetime, timedelta
 
-import mqtt
+# import mqtt
 import logging
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s - %(asctime)s - %(message)s")
@@ -351,10 +351,10 @@ trend = "-"
 # Keep track of time elapsed
 start_time = time.time()
 
-# setup MQTT
-mqtt_temperature = mqtt.Publisher("masterbath/temp", "192.168.1.52")
-mqtt_humidity = mqtt.Publisher("masterbath/humidity", "192.168.1.52")
-mqtt_light = mqtt.Publisher("masterbath/illumination", "192.168.1.52")
+# # setup MQTT
+# mqtt_temperature = mqtt.Publisher("masterbath/temp", "192.168.1.52")
+# mqtt_humidity = mqtt.Publisher("masterbath/humidity", "192.168.1.52")
+# mqtt_light = mqtt.Publisher("masterbath/illumination", "192.168.1.52")
 
 while True:
     path = os.path.dirname(os.path.realpath(__file__))
@@ -402,8 +402,8 @@ while True:
     img.paste(temp_icon, (margin, 18), mask=temp_icon)
 
     # Publish temp to MQTT
-    if int(time_elapsed) % 10 == 0:
-        success = mqtt_temperature.publish(corr_temperature)
+    # if int(time_elapsed) % 10 == 0:
+    #     success = mqtt_temperature.publish(corr_temperature)
 
     # Humidity
     humidity = bme280.get_humidity()
@@ -418,8 +418,8 @@ while True:
     img.paste(humidity_icon, (margin, 48), mask=humidity_icon)
 
     # Publish humidity to MQTT
-    if int(time_elapsed) % 10 == 0:
-        success = mqtt_humidity.publish(corr_humidity)
+    # if int(time_elapsed) % 10 == 0:
+    #     success = mqtt_humidity.publish(corr_humidity)
 
     # Light
     light = ltr559.get_lux()
@@ -431,9 +431,9 @@ while True:
     light_icon = Image.open(f"{path}/icons/bulb-{light_desc.lower()}.png")
     img.paste(humidity_icon, (80, 18), mask=light_icon)
 
-    # Publish illumination to MQTT
-    if int(time_elapsed) % 10 == 0:
-        sucess = mqtt_light.publish(light)
+    # # Publish illumination to MQTT
+    # if int(time_elapsed) % 10 == 0:
+    #     sucess = mqtt_light.publish(light)
 
     # Pressure
     pressure = bme280.get_pressure()
