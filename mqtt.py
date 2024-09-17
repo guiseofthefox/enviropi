@@ -36,7 +36,7 @@ class Publisher():
         client.tls_set()
         client.username_pw_set(os.getenv("MQTT_USER"), os.getenv("MQTT_PASS"))
         client.on_connect = on_connect
-        client.connect(self.server, self.port, 10)
+        client.connect(self.server, self.port, 60)
         client.loop_forever()
 
     def publish(self, message) -> bool:
