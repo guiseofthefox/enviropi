@@ -33,7 +33,6 @@ class Publisher():
                 logging.error("Failed to connect to MQTT server.")
 
         client = mqtt_client.Client(client_id="", clean_session=True, userdata=None, protocol=mqtt_client.MQTTv311, transport="tcp")
-        client.tls_set()
         client.username_pw_set(os.getenv("MQTT_USER"), os.getenv("MQTT_PASS"))
         client.on_connect = on_connect
         client.connect(self.server, self.port, 60)
