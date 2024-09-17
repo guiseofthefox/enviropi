@@ -353,9 +353,9 @@ start_time = time.time()
 
 # setup MQTT
 
-mqtt_temperature = mqtt.Publisher("masterbath/temp", "tanukimario.mushroomkingdom")
-mqtt_humidity = mqtt.Publisher("masterbath/humidity", "tanukimario.mushroomkingdom")
-mqtt_light = mqtt.Publisher("masterbath/illumination", "tanukimario.mushroomkingdom")
+mqtt_temperature = mqtt.Publisher("masterbath/temp", "192.168.1.52")
+mqtt_humidity = mqtt.Publisher("masterbath/humidity", "192.168.1.52")
+mqtt_light = mqtt.Publisher("masterbath/illumination", "192.168.1.52")
 
 while True:
     path = os.path.dirname(os.path.realpath(__file__))
