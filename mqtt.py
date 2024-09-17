@@ -1,7 +1,12 @@
 """Publish state via MQTT."""
 
 import logging
+from dotenv import load_dotenv
+import os
 import paho.mqtt.publish as publish
+from paho.mqtt import client as mqtt_client
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s - %(asctime)s - %(message)s")
 
@@ -13,8 +18,26 @@ class Publisher():
     """
     def __init__(self, channel, server):
         self.channel = channel
-        self.server = server
-        self.client_id = "bathroompi"
+        self.server = os.getenv("MQTT_SERVER")
+        self.port = int(os.getenv("MQTT_PORT"))
+        self.client_id = "enviropi"
+
+        self.__connect()
+
+    def __connect(self):
+        """Connect to MQTT server."""
+        def on_connect(client, userdata, flags, rc):
+            if rc == 0:
+                logging.info("Connected to MQTT server.")
+            else:
+                logging.error("Failed to connect to MQTT server.")
+
+        client = mqtt_client.Client(self.client_id)
+        client.tls_set()
+        client.username_pw_set(os.getenv("MQTT_USER"), os.getenv("MQTT_PASS"))
+        client.on_connect = on_connect
+        client.connect(self.server, self.port, 10)
+        client.loop_forever()
 
     def publish(self, message) -> bool:
         """Publish message to MQTT server.

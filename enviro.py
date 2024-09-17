@@ -352,7 +352,6 @@ trend = "-"
 start_time = time.time()
 
 # setup MQTT
-
 mqtt_temperature = mqtt.Publisher("masterbath/temp", "192.168.1.52")
 mqtt_humidity = mqtt.Publisher("masterbath/humidity", "192.168.1.52")
 mqtt_light = mqtt.Publisher("masterbath/illumination", "192.168.1.52")
