@@ -412,7 +412,7 @@ while True:
     corr_humidity = correct_humidity(humidity, temperature, ((corr_temperature-32)*(5/9)))
     humidity_string = f"{corr_humidity:.0f}%"
     img = overlay_text(img, (68, 48), humidity_string, font_lg, align_right=True)
-    spacing = font_lg.getlength(humidity_string)[1] + 1
+    spacing = font_lg.getlength(humidity_string) + 1
     humidity_desc = describe_humidity(corr_humidity).upper()
     img = overlay_text(img, (68, 48 + spacing), humidity_desc, font_sm, align_right=True, rectangle=True)
     humidity_icon = Image.open(f"{path}/icons/humidity-{humidity_desc.lower()}.png")
