@@ -174,7 +174,7 @@ def draw_background(progress, period, day):
 
 def overlay_text(img, position, text, font, align_right=False, rectangle=False):
     draw = ImageDraw.Draw(img)
-    w, h = font.getlength(text)
+    w, h = font.getbbox(text)
     if align_right:
         x, y = position
         x -= w
