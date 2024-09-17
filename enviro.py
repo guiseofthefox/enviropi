@@ -177,7 +177,7 @@ def overlay_text(img, position, text, font, align_right=False, rectangle=False):
     left, top, right, bottom = font.getbbox(text)
     if align_right:
         x, y = position
-        x -= w
+        x -= right
         position = (x, y)
     if rectangle:
         x += 1
