@@ -174,7 +174,7 @@ def draw_background(progress, period, day):
 
 def overlay_text(img, position, text, font, align_right=False, rectangle=False):
     draw = ImageDraw.Draw(img)
-    w, h = font.getbbox(text)
+    left, top, right, bottom = font.getbbox(text)
     if align_right:
         x, y = position
         x -= w
@@ -184,7 +184,7 @@ def overlay_text(img, position, text, font, align_right=False, rectangle=False):
         y += 1
         position = (x, y)
         border = 1
-        rect = (x - border, y, x + w, y + h + border)
+        rect = (left - border, top - border, right + border, bottom + border)
         rect_img = Image.new('RGBA', (WIDTH, HEIGHT), color=(0, 0, 0, 0))
         rect_draw = ImageDraw.Draw(rect_img)
         rect_draw.rectangle(rect, (255, 255, 255))
@@ -393,7 +393,7 @@ while True:
 
     temp_string = f"{corr_temperature:.0f}°F"
     img = overlay_text(img, (68, 18), temp_string, font_lg, align_right=True)
-    spacing = font_lg.getlength(temp_string)[1] + 1
+    spacing = font_lg.getlength(temp_string) + 1
     if min_temp is not None and max_temp is not None:
         range_string = f"{min_temp:.0f}-{max_temp:.0f}"
     else:
@@ -426,7 +426,7 @@ while True:
     light = ltr559.get_lux()
     light_string = f"{int(light):,}"
     img = overlay_text(img, (WIDTH - margin, 18), light_string, font_lg, align_right=True)
-    spacing = font_lg.getlength(light_string.replace(",", ""))[1] + 1
+    spacing = font_lg.getlength(light_string.replace(",", "")) + 1
     light_desc = describe_light(light).upper()
     img = overlay_text(img, (WIDTH - margin - 1, 18 + spacing), light_desc, font_sm, align_right=True, rectangle=True)
     light_icon = Image.open(f"{path}/icons/bulb-{light_desc.lower()}.png")
@@ -443,7 +443,7 @@ while True:
     pressure_string = f"{int(mean_pressure):,} {trend}"
     img = overlay_text(img, (WIDTH - margin, 48), pressure_string, font_lg, align_right=True)
     pressure_desc = describe_pressure(mean_pressure).upper()
-    spacing = font_lg.getlength(pressure_string.replace(",", ""))[1] + 1
+    spacing = font_lg.getlength(pressure_string.replace(",", "")) + 1
     img = overlay_text(img, (WIDTH - margin - 1, 48 + spacing), pressure_desc, font_sm, align_right=True, rectangle=True)
     pressure_icon = Image.open(f"{path}/icons/weather-{pressure_desc.lower()}.png")
     img.paste(pressure_icon, (80, 48), mask=pressure_icon)
